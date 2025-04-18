@@ -36,8 +36,9 @@
         var hectares = Number(input_qtdHectares.value);
         var producaoToneladas = Number(input_metaProd.value);
         var precoTonelada = Number(input_valorKg.value);
-        var perda = Number(input_perda.value);
 
+        // PERDA E CONVERSÃO PARA DECIMAL
+        var perda = Number(input_perda.value);
         var perdaDecimal = perda / 100;
 
         // SEM PROJETO
@@ -50,6 +51,23 @@
         var ganhoComProjeto = producaoFinalProjeto * precoTonelada;
         var producaoFinalProjetoHectares = (producaoToneladas / hectares) * (1 - perdaDecimal / 2);
 
+
+        // IF DE VERIFICACAO DAS INPUTS
+        if (
+            isNaN(hectares) || hectares <= 0 ||
+            isNaN(producaoToneladas) || producaoToneladas <= 0 ||
+            isNaN(precoTonelada) || precoTonelada <= 0 ||
+            isNaN(perda) || perda < 0
+        ) {
+            alert(`Informe valores válidos nos campos!`);
+            res.innerHTML = '';
+            res2.innerHTML = '';
+            res3.innerHTML = '';
+            return;
+        }
+
+        // VAR DE RENDIMENTO SEM E COM PROJETO
+        
         var classificacaoSemProjeto = '';
         if (producaoFinalHectares < 3) {
             classificacaoSemProjeto = 'Baixo Rendimento';
@@ -132,7 +150,8 @@
             Rendimento Médio: Entre 3 e 6 t/ha<br>
             Bom Rendimento: Entre 6 e 10 t/ha<br>
             Excelente Rendimento: Acima de 10 t/ha 
-
+            <br><br>
+            Fonte: Incaper (Instituto Capixaba de Pesquisa, Assistência Técnica e Extensão Rural)
             <br><br>
         `;
 
@@ -141,7 +160,8 @@
 
         <br><br>
 
-        A partir da aplicação do OlivGuard, sistema que utiliza sensores para monitorar a umidade do solo, conseguimos reduzir significativamente as perdas para <strong> ${perda / 2}% </strong>. <br> Isso fez com que a produção final saltasse para <strong> ${producaoFinalProjeto} </strong> toneladas, aumentando o ganho bruto para <strong> ${ganhoComProjeto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong>. <br> A produtividade por hectare também subiu para <strong> ${producaoFinalProjetoHectares} </strong> toneladas, classificada como <strong> ${classificacao}</strong>.
+        A partir da aplicação do OlivGuard, sistema que utiliza sensores para monitorar a umidade do solo, estima-se uma redução de perda para <strong> ${perda / 2}% </strong>. <br> Isso fez com que a produção final saltasse para <strong> ${producaoFinalProjeto} </strong> toneladas, aumentando o ganho bruto para <strong> ${ganhoComProjeto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong>. <br> A produtividade por hectare também subiu para <strong> ${producaoFinalProjetoHectares} </strong> toneladas, classificada como <strong> ${classificacao}</strong>.
         `;
     }
+
 </script>
